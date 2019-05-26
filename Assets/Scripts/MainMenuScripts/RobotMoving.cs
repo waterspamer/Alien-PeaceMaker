@@ -13,6 +13,11 @@ public class RobotMoving : MonoBehaviour
         StartCoroutine(ChangeDir());
     }
 
+    void Awake()
+    {
+        Time.timeScale = 1;
+    }
+
     private float _scale;
 
     void OnMouseEnter()

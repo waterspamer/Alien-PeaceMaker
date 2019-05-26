@@ -199,6 +199,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 20
   DamageRadius: 0.2
+  BigExplosionPref: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b,
+    type: 3}
   PoolTag: BasicBullets
 --- !u!54 &3476990974878356652
 Rigidbody:

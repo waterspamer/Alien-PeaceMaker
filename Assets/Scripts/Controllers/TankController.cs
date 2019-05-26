@@ -20,15 +20,12 @@ public class TankController : MonoBehaviour
 
     private bool _ffIsActive;
 
-    private PlayerStatsController _pCtrlInst;
-
     public delegate void OnWin();
     public static event OnWin WinSender;
 
     // Start is called before the first frame update
     void Awake()
     {
-        _pCtrlInst = PlayerStatsController.instance;
         _ffIsActive = false;
         ForceFieldPref.SetActive(false);
         _rb = GetComponent<Rigidbody>();
@@ -71,8 +68,13 @@ public class TankController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        if (Input.GetKeyDown(KeyCode.Q))
+            {
+            var inst = PlayerStatsController.instance;
+            if (inst.IsEnoughEnergy(inst.FieldCost)) StartCoroutine(FieldSet());
+        }
         
-        if (Input.GetKeyDown(KeyCode.Q) && _pCtrlInst.IsEnoughEnergy(_pCtrlInst.FieldCost)) StartCoroutine(FieldSet());
         if (Input.GetKey(KeyCode.W))
         {
             _rb.AddRelativeForce(Vector3.left  * MoveSpeed * 1000 * Time.deltaTime);

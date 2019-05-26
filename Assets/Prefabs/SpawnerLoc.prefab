@@ -356,6 +356,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnerNew
       objectReference: {fileID: 0}
+    - target: {fileID: 1559154395098801831, guid: b245d187f9632174faf6c26894c05ba4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
+      objectReference: {fileID: 0}
     - target: {fileID: 5499032780562894043, guid: b245d187f9632174faf6c26894c05ba4,
         type: 3}
       propertyPath: m_LocalPosition.x

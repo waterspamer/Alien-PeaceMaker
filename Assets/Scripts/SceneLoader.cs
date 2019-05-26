@@ -7,7 +7,8 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadMenu()
     {
-        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+        SceneManager.UnloadSceneAsync("MainScene");
+        SceneManager.LoadSceneAsync("MainMenuScene");
     }
     public void AppQuit()
     {

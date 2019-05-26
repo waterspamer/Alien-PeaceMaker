@@ -10,6 +10,8 @@ public class BasicBulletScript : MonoBehaviour, IPooledObject
 
     [Range(.1f, 5)] public float DamageRadius = 2f;
 
+    public GameObject BigExplosionPref;
+
     public string PoolTag;
 
     private float explosionForce = 2f;
@@ -22,8 +24,14 @@ public class BasicBulletScript : MonoBehaviour, IPooledObject
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.CompareTag("Player")) return;
-
+        
         var colliders = Physics.OverlapSphere(col.contacts[0].point, DamageRadius);
+        var s = col.gameObject;
+        if (s.CompareTag("Spawner"))
+        {
+            Instantiate(BigExplosionPref, transform.position, Quaternion.identity);
+            Destroy(s);
+        }
         foreach (Collider hit in colliders)
         {
             var rb = hit.GetComponent<Rigidbody>();

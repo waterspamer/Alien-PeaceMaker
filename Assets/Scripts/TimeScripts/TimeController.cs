@@ -16,6 +16,7 @@ public class TimeController : MonoBehaviour
     {
         instance = this;
         _timeScaleDelta = Time.timeScale / _bTimeMultiplier;
+        Time.timeScale = 1;
     }
 
     IEnumerator TimeScaleSwapper(float time)

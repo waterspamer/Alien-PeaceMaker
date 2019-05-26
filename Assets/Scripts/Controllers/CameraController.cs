@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class CameraController : MonoBehaviour
     private bool _rocketControlling = false;
 
     private Transform _tmp;
+
+
 
 
 
@@ -81,6 +84,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Y)) SceneManager.LoadScene("MainScene");
         if (_bulletTime)
         {
             transform.position = Vector3.Lerp(transform.position, _bulletTimePos, Time.fixedDeltaTime * .5f);
