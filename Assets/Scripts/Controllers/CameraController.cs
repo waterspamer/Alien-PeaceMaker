@@ -28,6 +28,11 @@ public class CameraController : MonoBehaviour
 
     public static CameraController instance;
 
+    void OnDisable()
+    {
+        instance = null;
+    }
+
     void Awake()
     {
         if (instance != null) return;
@@ -40,8 +45,6 @@ public class CameraController : MonoBehaviour
         _bulletTimePos = btTransform.position;
         transform.LookAt(btTransform);
         StartCoroutine(ToggleCameraBulletTime());
-
-
     }
 
     public void RocketObserve(GameObject rocket)
@@ -70,6 +73,7 @@ public class CameraController : MonoBehaviour
         _bulletTime = true;
         yield return new WaitForSeconds(.5f);
         _bulletTime = false;
+        TimeController.instance.DisableBulletTime();
         transform.position = _defaultTransform.position;
         transform.rotation = _defaultTransform.rotation;
 
@@ -81,16 +85,17 @@ public class CameraController : MonoBehaviour
         _offset = PosToLookAt.position - transform.position;   
     }
 
+
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Y)) SceneManager.LoadScene("MainScene");
         if (_bulletTime)
         {
             transform.position = Vector3.Lerp(transform.position, _bulletTimePos, Time.fixedDeltaTime * .5f);
             return;
         }
-
+        transform.position += new Vector3(0, Input.mouseScrollDelta.y, 0) * 10;
 
         transform.LookAt(PosToLookAt);
         transform.position = Vector3.Lerp(transform.position, PosToLookAt.position - _offset, Time.deltaTime * .5f );

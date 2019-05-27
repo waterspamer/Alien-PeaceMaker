@@ -10,14 +10,23 @@ public class KillStreakManager : MonoBehaviour
 
     public Text StreakText;
 
+    public static KillStreakManager instance;
+
     void Awake()
     {
+        if (instance == null) instance = this;
         EnemyHealthController.OnKill += AddKillCounter;
         _killCount = 0;
     }
 
+    void OnDisable()
+    {
+        EnemyHealthController.OnKill -= AddKillCounter; 
+    }
+
     private void AddKillCounter()
     {
+        StopCoroutine(Countdown());
         _killCount++;
         _killCount = _killCount > 5 ? 5 : _killCount;
         if (_killCount > 1)
@@ -56,7 +65,7 @@ public class KillStreakManager : MonoBehaviour
 
     IEnumerator Countdown()
     {
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(10);
         _killCount = 0;
     }
 }

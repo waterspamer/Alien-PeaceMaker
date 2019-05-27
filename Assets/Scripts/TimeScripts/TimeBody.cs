@@ -32,15 +32,24 @@ public class TimeBody : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.T))
-            StartRewind();
-        if (Input.GetKeyUp(KeyCode.T))
-            StopRewind();
+        {
+            isRewinding = !isRewinding;
+            //StartRewind();
+        }
+           
+        if (Input.GetKey(KeyCode.T))
+        {
+            
+            //StopRewind();
+        }
+        if (isRewinding) StartRewind();
+        if (!isRewinding) StopRewind();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (isRewinding)
             Rewind();
@@ -98,7 +107,7 @@ public class TimeBody : MonoBehaviour
     }
     void ReapplyForces()
     {
-   
+        if (pointsInTime.Count == 0) return;
         var piT = pointsInTime.First.Value;
         rb.position = piT.position;
         rb.rotation = piT.rotation;

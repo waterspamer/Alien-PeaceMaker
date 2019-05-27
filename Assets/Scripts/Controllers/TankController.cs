@@ -14,7 +14,7 @@ public class TankController : MonoBehaviour
     public float WheelRotSpeed = .2f;
     public float SelfRotSpeed = .4f;
 
-    [Range(0, 10f)] public float MoveSpeed = 3f;
+    [Range(0, 10f)] public float MoveSpeed = 15f;
 
     public GameObject ForceFieldPref;
 
@@ -51,37 +51,30 @@ public class TankController : MonoBehaviour
         {
             _ffIsActive = !_ffIsActive;
             ForceFieldPref.SetActive(_ffIsActive);
-            PlayerStatsController.instance.SetForceField(_ffIsActive);
+            
             yield return new WaitForSeconds(.1f);
         }
+        PlayerStatsController.instance.SetForceField(_ffIsActive);
         yield return new WaitForSeconds(10f);
 
         for (int i = 0; i < 3; i++)
         {
             _ffIsActive = !_ffIsActive;
             ForceFieldPref.SetActive(_ffIsActive);
-            PlayerStatsController.instance.SetForceField(_ffIsActive);
+            
             yield return new WaitForSeconds(.3f);
         }
+        PlayerStatsController.instance.SetForceField(_ffIsActive);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
+        _rb.AddRelativeForce(Input.GetAxis("Vertical") * Vector3.left * MoveSpeed * 1000 * Time.deltaTime);
         if (Input.GetKeyDown(KeyCode.Q))
             {
             var inst = PlayerStatsController.instance;
             if (inst.IsEnoughEnergy(inst.FieldCost)) StartCoroutine(FieldSet());
-        }
-        
-        if (Input.GetKey(KeyCode.W))
-        {
-            _rb.AddRelativeForce(Vector3.left  * MoveSpeed * 1000 * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            _rb.AddRelativeForce(Vector3.right * MoveSpeed * 1000 * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -91,6 +84,7 @@ public class TankController : MonoBehaviour
         {
             transform.Rotate(new Vector3(0, 1f, 0), SelfRotSpeed, Space.Self);
         }
-
+        var rotation = transform.rotation;
+        //transform.rotation = Quaternion.Euler(0, rotation.y, 0);
     }
 }

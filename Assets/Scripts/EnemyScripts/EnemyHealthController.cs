@@ -63,6 +63,12 @@ public class EnemyHealthController : MonoBehaviour
         MainHB.fillAmount = (float)_currentHealth / (float)StartHealth;
     }
 
+    IEnumerator ResetTime()
+    {
+        yield return new WaitForSeconds(1);
+        TimeController.instance.DisableBulletTime();
+    }
+
     void Die()
     {
         OnKill();
@@ -70,6 +76,7 @@ public class EnemyHealthController : MonoBehaviour
         Destroy(a, 1.7f);
 
         TimeController.instance.EnableBulletTime(1);
+        StartCoroutine(ResetTime());
         CameraController.instance.MoveToBulletTime(transform);
         PlayerStatsController.instance.ChangeEnergy(EnergyCost);
         Destroy(gameObject);

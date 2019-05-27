@@ -14,10 +14,10 @@ public class EnemyBulletScript : MonoBehaviour
         var obj = c.gameObject;
 
         if (obj.CompareTag("Player"))
-            if (!PlayerStatsController.instance.Forced)
+            if (!PlayerStatsController.instance.Forced && !obj.GetComponent<TimeBody>().IsRewinding())
             obj.GetComponent<PlayerStatsController>().ChangeHP((int)-Damage);
 
         ObjectPooler.instance.ReturnToPool(gameObject, PoolTag);
-        ObjectPooler.instance.SpawnFromPool("SmallExplosionEffect", c.contacts[0].point, Quaternion.Euler(c.contacts[0].normal));
+        ObjectPooler.instance.SpawnFromPool("SmallExplosionEffect", c.contacts[0].point + c.contacts[0].point.normalized * 1f, Quaternion.Euler(c.contacts[0].normal));
     }
 }

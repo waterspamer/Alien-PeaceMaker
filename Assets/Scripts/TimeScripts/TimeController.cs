@@ -17,6 +17,7 @@ public class TimeController : MonoBehaviour
         instance = this;
         _timeScaleDelta = Time.timeScale / _bTimeMultiplier;
         Time.timeScale = 1;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
     }
 
     IEnumerator TimeScaleSwapper(float time)
@@ -56,6 +57,8 @@ public class TimeController : MonoBehaviour
     {
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        _uiCanvas.enabled = true;
+        Debug.Log("DisabledBT");
     }
 
 }

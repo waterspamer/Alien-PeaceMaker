@@ -87,7 +87,7 @@ public class PlayerStatsController : MonoBehaviour
     public void ChangeEnergy(float value)
     {
         _currentEnergy += value;
-        _currentEnergy = _currentEnergy > MaxEnergy ? MaxEnergy : _currentEnergy;
+        _currentEnergy = Mathf.Clamp(_currentEnergy, 0, MaxEnergy);
         MainEB.fillAmount = (float)_currentEnergy / (float)MaxEnergy;
     }
 

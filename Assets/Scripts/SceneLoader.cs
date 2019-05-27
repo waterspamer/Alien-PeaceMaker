@@ -17,7 +17,7 @@ public class SceneLoader : MonoBehaviour
 
     public void Replay()
     {
-        
-        SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
+        SceneManager.UnloadSceneAsync("MainScene");
+        SceneManager.LoadSceneAsync("MainScene", LoadSceneMode.Single);
     }
 }

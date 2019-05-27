@@ -42,6 +42,7 @@ public class WeaponScript : MonoBehaviour
 
     public GameObject RocketPrefab;
 
+    private bool _canUseRocket = true;
 
     [Header("Unity Setups")]
 
@@ -66,19 +67,34 @@ public class WeaponScript : MonoBehaviour
 
     }
 
+    IEnumerator RocketCoolDown()
+    {
+        _canUseRocket = false;
+        yield return new WaitForSeconds(10f);
+        _canUseRocket = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (inst.IsEnoughEnergy(RocketEnergyCost))
+            if (inst.IsEnoughEnergy(RocketEnergyCost) && _canUseRocket)
             {
                 inst.ChangeEnergy(-RocketEnergyCost);
                 Instantiate(RocketPrefab, MarkDecal.transform.position + new Vector3(0, 5, 0), Quaternion.Euler(0, 0, 90));
+                StartCoroutine(RocketCoolDown());
             }
             
         }
-
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            AudioManager.instance.PlayMGSound();
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            AudioManager.instance.StopMGSound();
+        }
         if (Input.GetKey(KeyCode.Mouse0))
         {
             Gun.transform.Rotate(new Vector3(0, 0, 1), gunRotSpeed, Space.Self);
